@@ -34,6 +34,10 @@ const Ticket: React.FC<TicketProps> = forwardRef(function Render(
     date,
     price,
     presalePrice,
+    sector,
+    sectorDescription,
+    row,
+    seatNumber,
     mainArt,
     logoArt,
   },
@@ -156,6 +160,10 @@ const Ticket: React.FC<TicketProps> = forwardRef(function Render(
         date={date}
         price={price}
         presalePrice={presalePrice}
+        sector={sector}
+        sectorDescription={sectorDescription}
+        row={row}
+        seatNumber={seatNumber}
         fill={color}
       />
 

@@ -20,6 +20,10 @@ const Home = () => {
   const [time, setTime] = useState(moment().format("HH:mm"));
   const [price, setPrice] = useState(150);
   const [presalePrice, setPresalePrice] = useState(22.5);
+  const [sector, setSector] = useState("Numerato 1");
+  const [sectorDescription, setSectorDescription] = useState("Rosso");
+  const [row, setRow] = useState("5");
+  const [seat, setSeat] = useState("17");
 
   const [mainArt, setMainArt] = useState<ImageState>({ src: "", cover: false });
   const [logoArt, setLogoArt] = useState<ImageState>({ src: "", cover: false });
@@ -39,6 +43,10 @@ const Home = () => {
           date={dateMomentInstance}
           price={price}
           presalePrice={presalePrice}
+          sector={sector}
+          sectorDescription={sectorDescription}
+          row={row}
+          seatNumber={seat}
           background={background}
           color={color}
           mainArt={{
@@ -75,7 +83,32 @@ const Home = () => {
           value={time}
           onChange={(e) => setTime(e.target.value)}
         />
+      </div>
 
+      <div>
+        <input
+          type="text"
+          value={sector}
+          onChange={(e) => setSector(e.target.value)}
+        />
+        <input
+          type="text"
+          value={sectorDescription}
+          onChange={(e) => setSectorDescription(e.target.value)}
+        />
+        <input
+          type="text"
+          value={row}
+          onChange={(e) => setRow(e.target.value)}
+        />
+        <input
+          type="text"
+          value={seat}
+          onChange={(e) => setSeat(e.target.value)}
+        />
+      </div>
+
+      <div>
         <input
           type="number"
           value={price}

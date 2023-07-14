@@ -11,10 +11,13 @@ export type TicketDetailsProps = {
   date: moment.Moment;
   price: number;
   presalePrice: number;
+  sector?: string;
+  sectorDescription?: string;
+  row?: string;
+  seatNumber?: string;
   fill?: string;
 };
 
-// pad end with 2 0s
 const formatPrice = (price: number) => price.toFixed(2);
 
 const Details: React.FC<TicketDetailsProps> = ({
@@ -23,6 +26,10 @@ const Details: React.FC<TicketDetailsProps> = ({
   date,
   price,
   presalePrice,
+  sector,
+  sectorDescription,
+  row,
+  seatNumber,
   fill = "#fff",
 }) => (
   <g id="fields">
@@ -381,7 +388,7 @@ const Details: React.FC<TicketDetailsProps> = ({
         fontFamily: CarnovaNarrow,
       }}
     >
-      XX
+      {sector}
     </text>
 
     <text
@@ -392,7 +399,7 @@ const Details: React.FC<TicketDetailsProps> = ({
         fontFamily: PacificStandardLight,
       }}
     >
-      Platea Bassa
+      {sectorDescription}
     </text>
 
     <text
@@ -425,7 +432,7 @@ const Details: React.FC<TicketDetailsProps> = ({
         fontFamily: CarnovaNarrow,
       }}
     >
-      X
+      {row}
     </text>
 
     <text
@@ -436,7 +443,7 @@ const Details: React.FC<TicketDetailsProps> = ({
         fontFamily: CarnovaNarrow,
       }}
     >
-      XX
+      {seatNumber}
     </text>
 
     <text
@@ -447,7 +454,7 @@ const Details: React.FC<TicketDetailsProps> = ({
         fontFamily: PacificStandardLight,
       }}
     >
-      Platea Bassa
+      {sectorDescription}
     </text>
 
     <text
