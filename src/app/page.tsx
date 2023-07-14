@@ -1,95 +1,160 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
 
-export default function Home() {
+import styles from "./page.module.css";
+import downloadSVGasPNG from "@/utills/downloadSVGasPNg";
+import { useRef, useState } from "react";
+import Ticket from "@/components/Ticket";
+import moment from "moment";
+
+type ImageState = {
+  src: string;
+  cover: boolean;
+};
+
+const Home = () => {
+  const ref = useRef<SVGSVGElement>(null);
+
+  const [eventName, setEventName] = useState("Event Name");
+  const [venueName, setVenueName] = useState("Venue Name");
+  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+  const [time, setTime] = useState(moment().format("HH:mm"));
+  const [price, setPrice] = useState(150);
+  const [presalePrice, setPresalePrice] = useState(22.5);
+
+  const [mainArt, setMainArt] = useState<ImageState>({ src: "", cover: false });
+  const [logoArt, setLogoArt] = useState<ImageState>({ src: "", cover: false });
+
+  const [background, setBackground] = useState("#000000");
+  const [color, setColor] = useState<"white" | "black">("white");
+
+  const dateMomentInstance = moment(`${date} ${time}`).locale("it");
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      <div className={styles.ticketContainer}>
+        <Ticket
+          ref={ref}
+          eventName={eventName}
+          venueName={venueName}
+          date={dateMomentInstance}
+          price={price}
+          presalePrice={presalePrice}
+          background={background}
+          color={color}
+          mainArt={{
+            src: mainArt.src,
+            preserveAspectRatio: mainArt.cover ? "cover" : "contain",
+          }}
+          logoArt={{
+            src: logoArt.src,
+            preserveAspectRatio: logoArt.cover ? "cover" : "contain",
+          }}
         />
       </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+      <div>
+        <input
+          type="text"
+          value={eventName}
+          onChange={(e) => setEventName(e.target.value)}
+        />
+        <input
+          type="text"
+          value={venueName}
+          onChange={(e) => setVenueName(e.target.value)}
+        />
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+        <input
+          type="time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+        />
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(+e.target.value)}
+        />
+
+        <input
+          type="number"
+          value={presalePrice}
+          onChange={(e) => setPresalePrice(+e.target.value)}
+        />
       </div>
+
+      <div>
+        <input
+          type="color"
+          value={background}
+          onChange={(e) => setBackground(e.target.value)}
+        />
+        <input
+          type="radio"
+          name="color"
+          value="white"
+          checked={color === "white"}
+          onChange={(e) => setColor(e.target.value as "white" | "black")}
+        />
+        <label htmlFor="white">White</label>
+        <input
+          type="radio"
+          name="color"
+          value="black"
+          checked={color === "black"}
+          onChange={(e) => setColor(e.target.value as "white" | "black")}
+        />
+        <label htmlFor="black">Black</label>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Main Art URL"
+          value={mainArt.src}
+          onChange={(e) => setMainArt({ ...mainArt, src: e.target.value })}
+        />
+        <input
+          id="mainArtAspectRatio"
+          type="checkbox"
+          checked={mainArt.cover}
+          onChange={(e) => setMainArt({ ...mainArt, cover: e.target.checked })}
+        />
+        <label htmlFor="mainArtAspectRatio">Cover</label>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Logo Art URL"
+          value={logoArt.src}
+          onChange={(e) => setLogoArt({ ...logoArt, src: e.target.value })}
+        />
+        <input
+          id="logoArtAspectRatio"
+          type="checkbox"
+          checked={logoArt.cover}
+          onChange={(e) => setLogoArt({ ...logoArt, cover: e.target.checked })}
+        />
+        <label htmlFor="logoArtAspectRatio">Cover</label>
+      </div>
+
+      <button
+        onClick={() =>
+          ref.current &&
+          downloadSVGasPNG(ref.current, `${eventName} - Ticket.png`, 4)
+        }
+      >
+        Download image
+      </button>
     </main>
-  )
-}
+  );
+};
+
+export default Home;
