@@ -2,7 +2,10 @@ import Details, { TicketDetailsProps } from "@/components/Ticket/Details";
 import StaticArtBackground from "@/components/Ticket/StaticArtBackground";
 import StaticArtForeground from "@/components/Ticket/StaticArtForeground";
 import React, { forwardRef } from "react";
-import FontStyles from "@/components/Ticket/FontStyles";
+import FontStyles, {
+  CarnovaNarrow,
+  CarnovaNarrowSemibold,
+} from "@/components/Ticket/FontStyles";
 import { ImageParams } from "@/model/ImageParams";
 
 type TicketProps = TicketDetailsProps & {
@@ -61,16 +64,19 @@ const Ticket: React.FC<TicketProps> = forwardRef(function Render(
           fill={background}
           transform="translate(59.2 30.8)"
         />
-        <image
-          id="img_image"
-          width={184}
-          height={195}
-          transform="translate(234.1 30.8)"
-          xlinkHref={mainArt.src}
-          preserveAspectRatio={parsePreserveAspectRatio(
-            mainArt.preserveAspectRatio
-          )}
-        />
+
+        {mainArt.src && (
+          <image
+            id="img_image"
+            width={184}
+            height={195}
+            transform="translate(234.1 30.8)"
+            xlinkHref={mainArt.src}
+            preserveAspectRatio={parsePreserveAspectRatio(
+              mainArt.preserveAspectRatio
+            )}
+          />
+        )}
       </g>
 
       <g id="cuts">
@@ -167,7 +173,7 @@ const Ticket: React.FC<TicketProps> = forwardRef(function Render(
         fill={color}
       />
 
-      {logoArt && (
+      {logoArt && logoArt.src && (
         <g id="logo-2" data-name="logo">
           <image
             id="logo_image"
@@ -183,6 +189,29 @@ const Ticket: React.FC<TicketProps> = forwardRef(function Render(
       )}
 
       <StaticArtForeground color={color} />
+
+      <text
+        transform="translate(572.2 230.4)"
+        color="#000000"
+        fontSize="4px"
+        fontFamily={CarnovaNarrow}
+        textAnchor="end"
+      >
+        <tspan
+          x="0"
+          y="0"
+          fontFamily={CarnovaNarrowSemibold}
+          letterSpacing="0.1em"
+        >
+          not a real ticket
+        </tspan>
+        <tspan>
+          {" "}
+          - this tool is for fun only and is not intended to be used for any
+          other purpose, it is not affiliated with any ticketing company nor
+          with TicketOne in particular
+        </tspan>
+      </text>
     </svg>
   );
 });
