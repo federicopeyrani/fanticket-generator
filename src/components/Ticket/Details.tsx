@@ -4,6 +4,7 @@ import {
   PacificStandardLight,
 } from "@/components/Ticket/FontStyles";
 import moment from "moment";
+import React from "react";
 
 export type TicketDetailsProps = {
   eventName: string;
@@ -33,6 +34,16 @@ const Details: React.FC<TicketDetailsProps> = ({
   fill = "#fff",
 }) => (
   <g id="fields">
+    <defs>
+      <filter id="crispify">
+        <feComponentTransfer>
+          <feFuncA type="discrete" tableValues="0 0.2 1" />
+        </feComponentTransfer>
+      </filter>
+    </defs>
+
+    <style>{`#fields text { filter: url(#crispify); } `}</style>
+
     <text
       transform="translate(422.4855 90.495) scale(0.9888 1)"
       style={{
